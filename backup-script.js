@@ -9,7 +9,7 @@ const repoPath = './';
 const git = simpleGit(repoPath);
 
 const currentDate = new Date();
-const formattedDate = currentDate.toLocaleString('ru-RU').split('/').reverse().join('.')
+const formattedDate = currentDate.toLocaleDateString('ru-RU').split('/').reverse().join('.')
 
 /**
  * Создание backup веток
