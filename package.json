@@ -1,0 +1,17 @@
+{
+  "name": "backup-git-branches",
+  "version": "1.0.0",
+  "description": "Create backup git branches",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "drozdov.dn29@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^9.2.12",
+    "simple-git": "^3.21.0"
+  }
+}
