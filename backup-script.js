@@ -27,6 +27,10 @@ const createBranches = async (branches) => {
 
             // Создание копии ветки
             await git.checkoutLocalBranch(newBranchName);
+
+            //push
+            await git.push('origin', newBranchName);
+
             console.log(`Создан backup ${branch} => ${newBranchName}`);
         }
     } catch (error) {
