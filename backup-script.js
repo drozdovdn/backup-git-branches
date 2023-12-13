@@ -75,7 +75,39 @@ const filtersBranch = (allBranches)=> {
     return newBackupBranches;
 }
 
+/**
+ * Получаем все ветки с репозитория
+ * @returns {Promise<void>}
+ */
+async function fetchAllBranches() {
+    try {
+        // Получаем все изменения из удаленного репозитория
+        await git.fetch();
 
+        // Получаем список всех удаленных веток
+        const remoteBranches = await git.branch(['-r']);
+        const remoteBranchNames = remoteBranches.all;
+
+        // Получаем список всех локальных веток
+        const localBranches = await git.branchLocal();
+        const localBranchNames = localBranches.all;
+
+        // Создаем локальные ветки на основе удаленных (если их еще нет локально)
+        for (const remoteBranch of remoteBranchNames) {
+            const branchName = remoteBranch.replace('origin/', '');
+            if (!localBranchNames.includes(branchName)) {
+                await git.checkoutBranch(branchName, remoteBranch);
+                console.log(`Создана локальная ветка ${branchName} от удаленной ${remoteBranch}`);
+            } else {
+                console.log(`Локальная ветка ${branchName} уже существует.`);
+            }
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
+}
+
+await fetchAllBranches(); //стягиваем все ветки и создаем локальные копии если таких нет
 git.branchLocal((err) => {
     if (err) {
         console.error('Ошибка при получении списка веток:', err);
